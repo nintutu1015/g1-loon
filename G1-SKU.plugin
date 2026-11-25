@@ -1,0 +1,19 @@
+#!name = Google One SKU Inspector
+#!desc = Read-only SKU collection, local report and JSON export
+#!homepage = https://github.com/nintutu1015/g1-loon
+#!loon_version = 3.5.1(983)
+#!date = 2026-11-25
+#!tag = Google One,Tools
+
+[Argument]
+collect = switch,true,type=boolean,tag=SKU采集,desc=仅记录实际收到的商品编号
+report = switch,true,type=boolean,tag=本地报告,desc=在Safari查看本机记录
+maxItems = select,300,100,500,type=number,tag=SKU容量
+history = select,10,0,20,type=number,tag=响应历史条数
+
+[Script]
+response if ${url} ~= /^https:\/\/one\.google\.com\// then script("https://raw.githubusercontent.com/nintutu1015/g1-loon/main/g1-loon.js", {${maxItems}, ${history}}) with enable=${collect}, requires_body=true, timeout=10, tag="G1 SKU Scan"
+request if ${url} ~= /^https:\/\/one\.google\.com\/g1-sku-report\/?(?:\?|$)/ then script("https://raw.githubusercontent.com/nintutu1015/g1-loon/main/g1-loon.js") with enable=${report}, timeout=10, tag="G1 Local Report"
+
+[Mitm]
+hostname = one.google.com
