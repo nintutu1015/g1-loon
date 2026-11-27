@@ -12,7 +12,7 @@ maxItems = select,300,100,500,type=number,tag=SKU容量
 history = select,10,0,20,type=number,tag=响应历史条数
 
 [Script]
-response if ${url} ~= /^https:\/\/one\.google\.com\// then script("https://raw.githubusercontent.com/crhywun/g1-acq@v7.13.0/g1-acq-discount.js", {${maxItems}, ${history}}) with enable=${collect}, requires_body=true, timeout=10, tag="G1 SKU Scan"
+response if ${url} ~= /^https:\/\/one\.google\.com\// then script("https://cdn.jsdelivr.net/gh/crhywun/g1-acq@v7.13.0/g1-acq-discount.js", {${maxItems}, ${history}}) with enable=${collect}, requires_body=true, timeout=10, tag="G1 SKU Scan"
 request if ${url} ~= /^https:\/\/one\.google\.com\/g1-sku-report\/?(?:\?|$)/ then script("https://raw.githubusercontent.com/nintutu1015/g1-loon/main/g1-sku-report.js") with enable=${report}, timeout=10, tag="G1 Local Report"
 
 [Mitm]
